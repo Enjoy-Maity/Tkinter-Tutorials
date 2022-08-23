@@ -1,9 +1,10 @@
+from posixpath import commonpath
 from tkinter import *
 from PIL import ImageTk,Image
 import os
 
 root=Tk()
-root.title("Image Viewer")
+
 img_list=os.listdir("images/")
 
 for x in img_list:
@@ -13,7 +14,7 @@ for x in img_list:
         img_list.remove(x)
     else:
         img_list.remove(x)
-
+print(img_list)
 
 def forward(imagenum):
     global my_label
@@ -25,7 +26,7 @@ def forward(imagenum):
     my_label=Label(root,image=my_img)
     my_label.image=my_img   # creating a reference so it does not show blank image
     my_label.grid(row=0,column=0,columnspan=3)
-   
+    print(img_list[imagenum])
 
     if imagenum == len(img_list)-1:
         button_forward=Button(root,text="Next >>",state=DISABLED)
