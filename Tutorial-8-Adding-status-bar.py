@@ -4,6 +4,7 @@ from PIL import ImageTk,Image
 import os
 
 root=Tk()
+root.title("Image Viewer with status bar")
 
 img_list=os.listdir("images/")
 
@@ -26,7 +27,7 @@ def forward(imagenum):
     my_label=Label(root,image=my_img)
     my_label.image=my_img   # creating a reference so it does not show blank image
     my_label.grid(row=0,column=0,columnspan=3)
-    print(img_list[imagenum])
+    status=Label(root,text="Image "+str(imagenum+1)+"of"+str(len(img_list)),bd=1, relief= SUNKEN, anchor=E)
 
     if imagenum == len(img_list)-1:
         button_forward=Button(root,text="Next >>",state=DISABLED)
@@ -37,6 +38,7 @@ def forward(imagenum):
     button_exit.grid(row=1,column=1)
     button_forward.grid(row=1,column=2)
     button_back.grid(row=1,column=0)
+    status.grid(row=2,column=0,columnspan=3,sticky=W+E)
 
 def back(imagenum):
     global my_label
@@ -48,6 +50,7 @@ def back(imagenum):
     my_label=Label(root,image=my_img)
     my_label.image=my_img
     my_label.grid(row=0,column=0,columnspan=3)
+    status=Label(root,text="Image "+str(imagenum+1)+"of"+str(len(img_list)),bd=1, relief= SUNKEN, anchor=E)
     if imagenum == 0:
         button_back=Button(root,text="<< Back",state=DISABLED)
     
@@ -59,15 +62,18 @@ def back(imagenum):
     button_exit.grid(row=1,column=1)
     button_forward.grid(row=1,column=2)
     button_back.grid(row=1,column=0)
+    status.grid(row=2,column=0,columnspan=3,sticky=W+E)
 
 my_img=ImageTk.PhotoImage(Image.open(f"images/{img_list[0]}"))
 my_label=Label(root,image=my_img)
 my_label.grid(row=0,column=0,columnspan=3)
+status=Label(root,text="Image 1 of"+str(len(img_list)),bd=1, relief= SUNKEN, anchor=E)     #bd stands for border
+status.grid(row=2,column=0,columnspan=3,sticky=W+E)   # E for East(right), W for West(left) , N for North(Up) , S for South(Down) and sticky is used to increase the width of the label 
 
 button_forward=Button(root,text="Next >>",command=lambda:forward(1))
 button_forward.grid(row=1,column=2)
 button_exit=Button(root,text="Exit",command=root.quit)
-button_exit.grid(row=1,column=1)
+button_exit.grid(row=1,column=1,pady=10)
 button_back=Button(root,text="<< Back",command=back,state=DISABLED)
 button_back.grid(row=1,column=0)
 
